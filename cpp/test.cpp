@@ -57,6 +57,9 @@ public:
     if (Age > 30) std::cout << Name << " got promoted" << std::endl;
     else std::cout << Name << ", sorry no promotion for you" << std::endl;
   }
+  virtual void Work() {
+    std::cout << Name << " is checking email, task backlog, performing tasks..." << std::endl;
+  }
 };
 
 // Developer became a child class of Employee
@@ -86,14 +89,48 @@ public:
   }
 };
 
+class Teacher:public Employee {
+  string Subject;
+
+public:
+  void PrepareLesson() {
+    std::cout << Name << " is preperiong " << Subject << " lesson " << std::endl;
+  }
+
+  Teacher(string name, string company, int age, string subject) 
+    // Employee knows how to construct everything that employee had
+    :Employee(name, company, age) {
+    Subject = subject;
+
+  }
+  void Work() {
+    std::cout << Name << " is teahcing " << Subject << std::endl;
+  }
+};
+
 int main () {
   // Create an instance of the class
-  Employee employee1 = Employee("Aryan", "MSFT", 23);
-  Employee employee2 = Employee("Bob", "Citadel", 23);
+  // Employee employee1 = Employee("Aryan", "MSFT", 23);
+  // Employee employee2 = Employee("Bob", "Citadel", 23);
 
   Developer d = Developer("Chris", "Citadel", 21, "C++");
-  d.FixBug();
-  d.AskForPromotion();
+  // d.FixBug();
+  // d.AskForPromotion();
+  Teacher t = Teacher("David", "MFHS", 54, "Maths");
+  // t.PrepareLesson();
+  // t.AskForPromotion();
+  // d.Work();
+  // t.Work();
+
+  // Polymorphsim When a parent class refewrence is used to refer to a child class object
+  // needs to make trhe work function virtual
+  // employee pointer which holds a reference to a developer
+  Employee *e1 = &d;
+  Employee *e2 = &t;
+
+  e1->Work();
+  e2->Work();
+
   // employee2.setCompany("IMC");
   // employee2.setAge(12);
   // employee1.setAge(32);
@@ -125,3 +162,7 @@ int main () {
 // a child class can inherit these memebrs from the super class -> that is it will have the
 // same atrributes and behaviours
 // But can have its own members (its own unique methods and attributes)
+
+// Polymorphism - many forms - ability opf an object to have many forms
+// Same method can have different implementations depending on which child class is invoking it
+// When a parent class refewrence is used to refer to a child class object
